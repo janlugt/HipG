@@ -84,7 +84,7 @@ if [ -z "$HOST" ]; then
 	HOST=$(hostname)
 fi
 if [ -z "$HEAP" ]; then
-	HEAP=4g
+	HEAP=23g
 fi
 
 # Execute
@@ -92,7 +92,11 @@ HOSTNAME=$HOST:$PORT
 echo "Connecting to server $HOSTNAME" > /dev/stderr
 
 # set java binary
-JAVA_HOME="/usr/java/jdk1.7.0_04"
+# JAVA_HOME=/var/scratch/jason/JVMs/ibm-java-x86_64-60
+# JAVA_HOME=/var/scratch/tpkessel/jrrt-3.1.2-1.6.0/
+# JAVA_HOME=/usr/local/package/jdk1.6.0_17-linux-amd64
+# JAVA_HOME=/usr/local/package/jdk1.5.0_14-linux-amd64
+JAVA_HOME="/cm/shared/package/sun-jdk/jdk1.6.0_27"
 
 
 OPT=
@@ -217,34 +221,9 @@ JAVACOMMAND="$JAVA_HOME/bin/java $OPT $CONFIG\
 
 # Command to run in parallel (eg submit to SGE)
 #COMMAND="prun -native '-ar 94' $PRUNOPT $JAVACOMMAND"
-#COMMAND="prun $PRUNOPT $JAVACOMMAND"
-COMMAND="ssh root@diy-3-7 \"cd HipG-2.0; $JAVACOMMAND\""
+COMMAND="prun $PRUNOPT $JAVACOMMAND"
 
 echo "Running $COMMAND"
 #prun -native '-ar 94' $PRUNOPT $JAVACOMMAND
-#prun $PRUNOPT $JAVACOMMAND
+prun $PRUNOPT $JAVACOMMAND
 
-if [ $POOLSIZE -ge 1 ]; then
-	ssh root@diy-3-7 "cd HipG-2.0; $JAVACOMMAND" &
-fi
-if [ $POOLSIZE -ge 2 ]; then
-	ssh root@diy-3-10 "cd HipG-2.0; $JAVACOMMAND" &
-fi
-if [ $POOLSIZE -ge 3 ]; then
-	ssh root@diy-3-11 "cd HipG-2.0; $JAVACOMMAND" &
-fi
-if [ $POOLSIZE -ge 4 ]; then
-	ssh root@diy-3-13 "cd HipG-2.0; $JAVACOMMAND" &
-fi
-if [ $POOLSIZE -ge 5 ]; then
-	ssh root@diy-3-7 "cd HipG-2.0; $JAVACOMMAND" &
-fi
-if [ $POOLSIZE -ge 6 ]; then
-	ssh root@diy-3-10 "cd HipG-2.0; $JAVACOMMAND" &
-fi
-if [ $POOLSIZE -ge 7 ]; then
-	ssh root@diy-3-11 "cd HipG-2.0; $JAVACOMMAND" &
-fi
-if [ $POOLSIZE -ge 8 ]; then
-	ssh root@diy-3-13 "cd HipG-2.0; $JAVACOMMAND" &
-fi
