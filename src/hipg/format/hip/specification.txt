@@ -1,0 +1,31 @@
+Hip Format specification:
+
+Legend
+------
+
+int  - signed 4-byte integer (like a Java int)
+long - signed 8-byte long (like a Java long)
+string - unsigned 2-byte integer describing length n, next n bytes into a string, negative length describes null
+list(type) - int describing length of the list and next the objects
+
+Header
+------
+
+int     magic        -magic number (=17)
+string  info         -info about the file (who generated, name of the graph, etc)
+int     segments     -number of segments in which the file is divided into (typically >= 1000)
+int     rootSegment  -segment with the root node
+int     rootOffset   -offset of the root node
+list(string) hosts   -list of hosts (or urls) referenced to later
+list(string) dirs    -list of dirs referenced to later
+list:segments(       -list (and number) of segments
+    int states       -number of states in this segment
+    list:segments(int) outTransitions    -number of outgoing transitions from this segment to all other segments
+    list:segments(int) inTransitions     -number of incoming transitions from all other segments to this segment
+    int host         -id of the host containing files (refers to 'hosts')
+    int dir          -id of the directory containing files, on the host  (refers to 'dirs')
+    int format		 -information about format of this segment
+    int inFormat	 -information about the transposed segment
+)
+
+format = int string int int int list(string) list(string) list:3(int list:3(int) list:3(int) int int list(int) int)    

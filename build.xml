@@ -1,0 +1,309 @@
+<!--
+	Build script for HipG
+	Author: E. Krepska, ekr@cs.vu.nl
+-->
+
+<project name="hipg" default="all" basedir=".">
+
+	<!-- Global properties -->
+	<property name="version" value="1.5" />
+	<property name="project" value="hipg" />
+	<property environment="env" />
+	<property name="src" location="src" />
+	<property name="examples" location="examples" />
+	<property name="tmp" location="tmp" />
+	<property name="tmp2" location="tmp2" />
+	<property name="build" location="build" />
+	<property name="lib" location="lib" />
+	<property name="external" location="external" />
+	<property name="jar" location="${lib}/${project}-${version}.jar" />
+	<property name="examples-jar" location="${lib}/${project}-examples-${version}.jar" />
+	<property name="jar-graph-maker" location="${lib}/${project}-graph-maker-${version}.jar" />
+	<property name="log4j" location="log4j.properties" />
+	<property name="license" location="LICENSE.txt" />
+	<property name="release" location="${project}-release-${version}.zip" />
+	<property name="build.test" location="buildTest" />
+	<property name="test.results" location="testResults" />
+
+	<!-- ================================= 
+          target: all              
+         ================================= -->
+	<target name="all" description="Builds all" depends="build,examples" />
+
+	<!-- ================================= 
+          target: build              
+         ================================= -->
+	<target name="build" description="Builds the project">
+		<!-- Prepare -->
+		<delete dir="${tmp}" />
+		<tstamp />
+		<mkdir dir="${tmp}" />
+		<mkdir dir="${lib}" />
+
+		<!-- Create classpath -->
+		<path id="default.classpath">
+			<fileset dir="${external}">
+				<include name="*.jar" />
+				<exclude name="**/*-docs-*.jar" />
+			</fileset>
+		</path>
+
+		<!-- Compile the java code from ${src} into ${tmp} -->
+		<javac srcdir="${src}" destdir="${tmp}" debug="off" classpathref="default.classpath" includeantruntime="false">
+			<exclude name="**/*Test.java" />
+		</javac>
+
+		<!-- Put everything in ${tmp} into the jar file -->
+		<copy file="${license}" todir="${tmp}" />
+		<jar jarfile="${jar}" basedir="${tmp}">
+			<manifest>
+				<attribute name="Ibisc-Component" value="hipg.compile.HipGCC" />
+			</manifest>
+		</jar>
+
+		<!-- Rewrite applications using IbisC
+                (optional step for ipl applications) -->
+		<java classname="ibis.compile.Ibisc" taskname="Ibisc" failonerror="true" fork="true">
+			<arg line="${jar}" />
+			<classpath refid="default.classpath" />
+		</java>
+
+		<!--Clean up build dir -->
+		<delete dir="${tmp}" />
+	</target>
+
+	<!-- ================================= 
+          target: examples              
+         ================================= -->
+	<target name="examples" description="Builds examples">
+		<!-- Prepare -->
+		<delete dir="${tmp}" />
+		<tstamp />
+		<mkdir dir="${tmp}" />
+
+		<!-- Create new classpath used by compile -->
+		<path id="default.classpath.examples">
+			<fileset dir="${external}">
+				<include name="*.jar" />
+				<exclude name="**/*-docs-*.jar" />
+			</fileset>
+			<pathelement location="${jar}" />
+		</path>
+
+		<!-- Compile the java code from ${src} into ${tmp} -->
+		<javac srcdir="${examples}" destdir="${tmp}" debug="on" classpathref="default.classpath.examples" includeantruntime="false">
+			<exclude name="**/*Test.java" />
+		</javac>
+
+		<!-- Put everything in ${tmp} into the jar file -->
+		<copy file="${license}" todir="${tmp}" />
+		<jar jarfile="${examples-jar}" basedir="${tmp}" />
+
+		<!-- Rewrite applications using HipGCC -->
+		<java classname="ibis.compile.Ibisc" taskname="Ibisc" failonerror="true" fork="true">
+			<!-- 
+
+			 <arg line="-hipgcc ^hipg\.app\.scc\.owctypa3.* -hipgcc-verbose ${examples-jar} -hipgcc-debug-code "/>
+			 <arg line="-hipgcc ^hipg\.app\.scc\.OptimFB.* -hipgcc-verbose ${examples-jar} -hipgcc-debug-code "/>
+			 <arg line="-hipgcc ^hipg\.app\.SyncTest.* -hipgcc-verbose  ${examples-jar} -hipgcc-debug-code "/> 
+
+			 <arg line="-hipgcc hipg.app.onthefly.OnTheFlyVisitor.* ${examples-jar} -hipgcc-verbose -hipgcc-debug-code" />  
+			 <arg line="-hipgcc hipg.app.scc.CH.* 			${examples-jar} -hipgcc-verbose -hipgcc-debug-code"/> 
+			 <arg line="-hipgcc hipg.app.Visitor.* 			${examples-jar} -hipgcc-verbose -hipgcc-debug-code"/> 
+			 <arg line="-hipgcc hipg.app.onthefly.* 		${examples-jar} -hipgcc-verbose -hipgcc-debug-code"/> 
+			 <arg line="-hipgcc hipg.app.onthefly.*MAP.* 		${examples-jar} -hipgcc-verbose -hipgcc-debug-code" />  
+
+
+			 <arg line="-hipgcc ^hipg\.app\..* ${examples-jar} -hipgcc-info" /> 
+			 <arg line="-hipgcc ^hipg\.app\..* ${examples-jar} -hipgcc-verbose" /> 
+			 <arg line="-hipgcc ^hipg\.app\..* ${examples-jar}" /> 
+
+			 <arg line="-hipgcc hipg.app.scc.TSCCdc.* ${examples-jar} -hipgcc-verbose -hipgcc-debug-code -hipgcc-verify-4" /> 
+			 <arg line="-hipgcc hipg.app.scc.OBFRMP.* 			${examples-jar} -hipgcc-verbose -hipgcc-debug-code -hipgcc-verify-4"/> 
+
+			 <arg line="-hipgcc ^hipg\.app\..* ${examples-jar}" /> 
+
+			-->
+
+			 <arg line="-hipgcc ^hipg\.app\..* ${examples-jar}" /> 
+
+
+			<classpath>
+				<path refid="default.classpath.examples" />
+				<pathelement location="${examples-jar}" />
+			</classpath>
+		</java>
+
+		<!--Delete the build dir-->
+		<delete dir="${tmp}" />
+	</target>
+
+
+	<!-- ================================= 
+          target: test              
+         ================================= -->
+	<target name="test" depends="build,examples" description="Runs all tests">
+		<!-- compile tests -->
+		<delete dir="${build.test}" />
+		<mkdir dir="${build.test}" />
+		<delete dir="${test.results}" />
+		<mkdir dir="${test.results}" />
+		<javac srcdir="${src}" destdir="${build.test}" debug="on" includeantruntime="false">
+			<classpath>
+				<pathelement location="${jar}" />
+				<pathelement location="${examples-jar}" />
+				<fileset dir="${external}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+
+		<!-- execute tests -->
+		<junit printsummary="no" fork="yes">
+			<classpath>
+				<pathelement location="${jar}" />
+				<pathelement location="${examples-jar}" />
+				<pathelement location="${build.test}" />
+				<fileset dir="${external}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<formatter type="plain" usefile="true" />
+			<jvmarg value="-Dlog4j.configuration=file:${log4j}" />
+			<jvmarg value="-Dhipg.createCommunication=false" />
+			<jvmarg value="-Dhipg.poolSize=1" />
+			<jvmarg value="-Dhipg.maxGraphs=1024" />
+			<assertions>
+				<enable />
+			</assertions>
+			<batchtest todir="${test.results}">
+				<fileset dir="${src}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<!-- clean up -->
+		<delete dir="${build.test}" />
+	</target>
+
+	<!-- ================================= 
+          target: build-graph-maker              
+         ================================= -->
+	<target name="build-graph-maker" depends="" description="Builds graph maker library">
+
+		<!-- Clean up -->
+		<delete dir="${tmp}" />
+		<delete dir="${tmp2}" />
+
+		<!-- Create the time stamp -->
+		<tstamp />
+
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${tmp}" />
+		<mkdir dir="${tmp2}" />
+		<mkdir dir="${lib}" />
+
+		<!-- Create classpath used by compile -->
+		<path id="default.classpath">
+			<fileset dir="${external}">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+
+		<!-- Put the graph making part in tmp2 -->
+		<copy todir="${tmp2}">
+			<fileset dir="." casesensitive="yes" defaultexcludes="true">
+				<include name="examples/hipg/test/MakeGraph.java" />
+				<include name="src/hipg/format/GraphMaker.java" />
+				<include name="src/hipg/format/*/*Maker.java" />
+				<include name="src/hipg/format/*/*Header.java" />
+				<include name="src/hipg/format/*/*Segment.java" />
+				<include name="src/hipg/format/GraphIOException.java" />
+				<include name="src/hipg/utils/Utils.java" />
+				<include name="src/hipg/utils/IOUtils.java" />
+				<include name="src/hipg/utils/PairUtils.java" />
+				<include name="src/hipg/utils/Quicksort.java" />
+				<include name="src/hipg/utils/RandomPick.java" />
+			</fileset>
+		</copy>
+
+		<!-- Compile the java code from ${src} into ${tmp} -->
+		<javac srcdir="${tmp2}" destdir="${tmp}" debug="on" classpathref="default.classpath">
+		</javac>
+
+		<!--  in ${tmp} into the jar file -->
+		<jar jarfile="${jar-graph-maker}" basedir="${tmp}">
+			<manifest>
+				<attribute name="Ibisc-Component" value="hipg.compile.HipGCC" />
+			</manifest>
+		</jar>
+
+		<!--Clean up build dir -->
+		<delete dir="${tmp}" />
+		<delete dir="${tmp2}" />
+
+	</target>
+
+	<!-- ================================= 
+          target: release              
+         ================================= -->
+	<target name="release" depends="build,examples" description="Makes a release">
+
+		<!-- Clean up -->
+		<delete dir="${tmp}" />
+
+		<!-- Create the time stamp -->
+		<tstamp />
+
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${tmp}" />
+
+		<copy file="${jar}" todir="${tmp}" />
+		<copy file="${examples-jar}" todir="${tmp}" />
+		<copy file="build.xml" todir="${tmp}" />
+		<copy file="hipg.properties" todir="${tmp}" />
+		<copy file="${log4j}" todir="${tmp}" />
+		<copy file="${license}" todir="${tmp}" />
+		<copy file="todo.txt" todir="${tmp}" />
+		<copy file="readme.txt" todir="${tmp}" />
+		<mkdir dir="${tmp}/external" />
+		<copy todir="${tmp}/external">
+			<fileset dir="${external}" />
+		</copy>
+		<mkdir dir="${tmp}/bin" />
+		<copy todir="${tmp}/bin">
+			<fileset dir="bin" />
+		</copy>
+		<mkdir dir="${tmp}/sources" />
+		<mkdir dir="${tmp}/sources/src" />
+		<mkdir dir="${tmp}/sources/examples" />
+		<copy todir="${tmp}/sources/src">
+			<fileset dir="${src}" />
+		</copy>
+		<copy todir="${tmp}/sources/examples">
+			<fileset dir="${examples}" />
+		</copy>
+		<zip destfile="${tmp}/sources.zip" basedir="${tmp}/sources" />
+		<delete dir="${tmp}/sources" />
+
+		<!-- create the release archive -->
+		<zip destfile="${release}" basedir="${tmp}" />
+
+		<!-- Clean up -->
+		<delete dir="${tmp}" />
+
+	</target>
+
+	<!-- ================================= 
+          target: clean
+         ================================= -->
+	<target name="clean" description="Cleans up">
+		<delete dir="${build}" />
+		<delete dir="${build.test}" />
+		<delete dir="${tmp}" />
+		<delete dir="${tmp2}" />
+		<delete dir="${lib}" />
+	</target>
+
+</project>

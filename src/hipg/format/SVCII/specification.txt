@@ -1,0 +1,24 @@
+Hip Format specification:
+
+Legend
+------
+
+int  - unsigned 4-byte integer  
+long - signed 8-byte long (like a Java long)
+string - unsigned 2-byte integer describing length n, next n bytes into a string, negative length describes null
+list(type) - int describing length of the list and next the objects
+
+Header
+------
+
+int 	version = 17	-version of the format, magic number
+string 	info			-info about the file (who generated, name of the graph, etc)
+int		segments		-number of segments in which this representation is cut into
+int		root segment	-segment with root	
+int 	root offset		-segment with offset
+int		labels			-number of labels,>=0
+int		tau				-tau label
+int		dummy			-dummy field for specifis purposes
+int[]	states			-number of states per segment
+int[] 	transitions		-number of transitions per segment
+

@@ -1,0 +1,56 @@
+#!/bin/sh
+# SGE default annotations:
+#$ -N hipg-job
+#$ -l h_rt=0:15:00
+#$ -cwd
+#$ -S /bin/sh
+
+# Sanity checks to make sure we are running under prun/SGE:
+if [ "X$JOB_ID" = X ]; then
+    echo "No JOB_ID in environment; not running under SGE?" >&2
+    exit 1
+fi
+if [ "X$PRUN_PE_HOSTS" = X ]; then
+    echo "No PRUN_PE_HOSTS in environment; not running under prun?" >&2
+    exit 1
+fi
+
+# Construct host file for OpenMPI's mpirun:
+NODEFILE=$TMPDIR/hosts
+
+# Configure specified number of CPUs per node:
+( for i in $PRUN_PE_HOSTS; do
+    echo $i slots=$PRUN_CPUS_PER_NODE
+  done
+) > $NODEFILE
+
+cat $NODEFILE
+
+# Need to disable SGE's PE_HOSTFILE, or OpenMPI will use it instead or the
+# constructed nodefile based on prun's info:
+unset PE_HOSTFILE
+
+# Enforce TCP over eth0, not ib0
+# OMPI_OPTS="--mca pml ob1 --mca btl tcp,sm,self --mca btl_tcp_if_include eth0 --mca btl_tcp_if_exclude ib0"
+
+# Enforce TCP over ib0, not eth0
+# OMPI_OPTS="--mca pml ob1 --mca btl tcp,sm,self --mca btl_tcp_if_include ib0 --mca btl_tcp_if_exclude eth0,eth1,eth2"
+
+# All kinds of debug stuff:
+# OMPI_OPTS="--mca oob_tcp_debug 99 --mca oob_tcp_verbose 99 --mca mca_verbose 99 --mca pml_base_verbose 99 --mca btl_base_debug 99 --mca btl_base_verbose 99 --mca mtl_base_verbose 99"
+
+# Default: nothing, which selects openib
+# OMPI_OPTS=""
+# OMPI_OPTS="--mca mpi_paffinity_alone 1"
+# OMPI_OPTS="--mca rmaps_rank_file_path rankfile"
+# OMPI_OPTS="--mca rmaps_rank_file_path rankfile -mca btl_openib_if_exclude mlx4_1"
+
+# Remove a warning on the router nodes:
+# OMPI_OPTS="--mca btl_openib_warn_default_gid_prefix 0"
+OMPI_OPTS="--bind-to-core --bysocket"
+
+module load openmpi/gcc
+
+echo 	$MPI_RUN $OMPI_OPTS --hostfile $NODEFILE $PRUN_PROG $PRUN_PROGARGS
+	$MPI_RUN $OMPI_OPTS --hostfile $NODEFILE $PRUN_PROG $PRUN_PROGARGS
+
