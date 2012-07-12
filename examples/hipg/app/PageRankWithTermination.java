@@ -24,8 +24,11 @@ import hipg.runtime.Runtime;
 import hipg.runtime.Synchronizer;
 
 public class PageRankWithTermination {
+  
+  // Global variables
 	private static final double D = 0.85, E = 0.001;
 
+	// Interface for vertex
 	public static interface MyNode extends Node {
 		public void rank(Ranker ranker, double r);
 
@@ -34,7 +37,9 @@ public class PageRankWithTermination {
 		public void send(Ranker ranker);
 	}
 
+	// Class for vertex
 	public static final class MyLocalNode extends ExplicitLocalNode<MyNode> implements MyNode {
+	  // Local variables
 		private double rank, ranksum = 0.0, diff, N;
 
 		public MyLocalNode(ExplicitGraph<MyNode> graph, int reference) {
@@ -59,9 +64,9 @@ public class PageRankWithTermination {
 		}
 	}
 
+	// Master thread
 	public static class Ranker extends Synchronizer {
 		private final ExplicitGraph<MyNode> g;
-		private long startTime;
 
 		public Ranker(ExplicitGraph<MyNode> g) {
 			this.g = g;
@@ -70,49 +75,57 @@ public class PageRankWithTermination {
 		@Reduce
 		public double getGlobalErrorSum(double errorSum) {
 			for (int i = 0; i < g.nodes(); i++) {
-				final double diff = ((MyLocalNode) g.node(i)).diff;
-				errorSum += diff;
+				errorSum += ((MyLocalNode) g.node(i)).diff;
 			}
 			return errorSum;
 		}
 
 		@Override
 		public void run() {
-			startTime = System.nanoTime();
-			for (int i = 0; i < g.nodes(); i++) {
+
+		  // worker step
+		  for (int i = 0; i < g.nodes(); i++) {
 				((MyLocalNode) g.node(i)).rank = 1.0 / g.nodes();
 				((MyLocalNode) g.node(i)).N = g.nodes();
+				nice(i);
 			}
 			barrier();
-			print(" Initialization took: " + ConversionUtils.ns2sec(System.nanoTime() - startTime));			
 			
+			// master loop
 			int step = 0;
 			double errorSum = 2 * E;
 			while(errorSum > E) {
 				print("Step " + step);
-				startTime = System.nanoTime();
+				
+				// worker step
 				for (int i = 0; i < g.nodes(); i++) {
 					((MyLocalNode) g.node(i)).send(this);
-					if (i % 10000 == 9999) {
-						Runtime.nice();
-					}
+					nice(i);
 				}
 				barrier();
-				print(" Send took: " + ConversionUtils.ns2sec(System.nanoTime() - startTime));
-				startTime = System.nanoTime();
+
+				// worker step
 				for (int i = 0; i < g.nodes(); i++) {
 					((MyLocalNode) g.node(i)).compute(this);
+					nice(i);
 				}
 				barrier();
-				print(" Compute took: " + ConversionUtils.ns2sec(System.nanoTime() - startTime));
-				startTime = System.nanoTime();
+
+				// master step
 				errorSum = getGlobalErrorSum(0.0);
 				barrier();
-				print(" Global error sum reduction took: " + ConversionUtils.ns2sec(System.nanoTime() - startTime)
-						+ " (" + errorSum + ")");
+
+				// master step
 				step++;
 			}
 		}
+		
+		void nice(int i) {
+      if (i % 10000 == 9999) {
+        Runtime.nice();
+      }
+		}
+		
 	}
 
 	public class BinaryReader implements SyntheticGraph {
