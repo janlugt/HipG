@@ -49,5 +49,5 @@
 	<classpathentry kind="lib" path="external/trilead-ssh2-r13339-CJ.jar"/>
 	<classpathentry kind="lib" path="external/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="external/xmlParserAPIs.jar"/>
-	<classpathentry kind="output" path="tmp"/>
+	<classpathentry kind="output" path="classes"/>
 </classpath>

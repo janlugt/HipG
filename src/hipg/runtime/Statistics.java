@@ -532,7 +532,7 @@ public final class Statistics {
 	private static long graphUsedMemory = 0;
 	private static long maxMemory = 0;
 
-	private static boolean realMemoryUnAvailable = false;
+	private static boolean realMemoryUnAvailable = true;
 	private static long realTotalMemoryUnixMin = -1;
 	private static long realTotalMemoryUnixMax = -1;
 	private static long realUsedMemoryUnixMin = -1;
