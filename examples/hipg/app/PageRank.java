@@ -34,7 +34,7 @@ import hipg.runtime.Synchronizer;
  * @author E.Krepska -- ekr@cs.vu.nl
  */
 public class PageRank {
-	private static final double d = 0.85;
+	private static final double D = 0.85;
 
 	public static interface MyNode extends Node {
 		public void rank(Ranker ranker, double r);
@@ -51,18 +51,21 @@ public class PageRank {
 			super(graph, reference);
 		}
 
+		@Override
 		public void rank(Ranker ranker, double r) {
 			ranksum += r;
 		}
 
+		@Override
 		public void compute(Ranker ranker) {
-			rank = (1 - d) + d * ranksum;
+			rank = (1 - D) + D * ranksum;
 			ranksum = 0.0;
 		}
 
+		@Override
 		public void send(Ranker ranker) {
-			for (int j = 0; hasNeighbor(j); j++) {
-				neighbor(j).rank(ranker, (double) rank / (double) outdegree());
+			for (int i = 0; hasNeighbor(i); i++) {
+				neighbor(i).rank(ranker, rank / outdegree());
 			}
 		}
 	}
