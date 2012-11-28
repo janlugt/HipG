@@ -28,13 +28,13 @@ public class ExplicitLocalNode<TNode extends Node> extends LocalNode<TNode> {
 	protected final int reference;
 
 	/** Number of local neighbors. */
-	short localNeighborsCount;
+	int localNeighborsCount;
 	/** Number of remote neighbors. */
-	short remoteNeighborsCount;
+	int remoteNeighborsCount;
 	/** Number of local in-neighbors. */
-	short localInNeighborsCount;
+	int localInNeighborsCount;
 	/** Number of remote in-neighbors. */
-	short remoteInNeighborsCount;
+	int remoteInNeighborsCount;
 
 	/** Location of the first local neighbor. */
 	long localNeighborsStart = -1;
@@ -211,14 +211,14 @@ public class ExplicitLocalNode<TNode extends Node> extends LocalNode<TNode> {
 	public final void addTransition(final int owner, final int id) throws GraphCreationException {
 		final boolean local = owner == hipg.runtime.Runtime.getRank();
 		if (local) {
-			if (localNeighborsCount == Short.MAX_VALUE)
-				throw new GraphCreationException("Cannot handle more than " + Short.MAX_VALUE
+			if (localNeighborsCount == Integer.MAX_VALUE)
+				throw new GraphCreationException("Cannot handle more than " + Integer.MAX_VALUE
 						+ " local outgoing transitions per node");
 			localNeighborsCount++;
 			graph.getTransitions().addLocalTransition(this, graph.node(id));
 		} else {
-			if (remoteNeighborsCount == Short.MAX_VALUE)
-				throw new GraphCreationException("Cannot handle more than " + Short.MAX_VALUE
+			if (remoteNeighborsCount == Integer.MAX_VALUE)
+				throw new GraphCreationException("Cannot handle more than " + Integer.MAX_VALUE
 						+ " remote outgoing transitions per node");
 			remoteNeighborsCount++;
 			graph.getTransitions().addRemoteTransition(this, owner, id);
@@ -228,14 +228,14 @@ public class ExplicitLocalNode<TNode extends Node> extends LocalNode<TNode> {
 	public final void addInTransition(final int sourceOwner, final int sourceId) throws GraphCreationException {
 		final boolean local = sourceOwner == hipg.runtime.Runtime.getRank();
 		if (local) {
-			if (localInNeighborsCount == Short.MAX_VALUE)
-				throw new GraphCreationException("Cannot handle more than " + Short.MAX_VALUE
+			if (localInNeighborsCount == Integer.MAX_VALUE)
+				throw new GraphCreationException("Cannot handle more than " + Integer.MAX_VALUE
 						+ " local incoming transitions per node");
 			localInNeighborsCount++;
 			graph.getInTransitions().addLocalTransition(this, graph.node(sourceId));
 		} else {
-			if (remoteNeighborsCount == Short.MAX_VALUE)
-				throw new GraphCreationException("Cannot handle more than " + Short.MAX_VALUE
+			if (remoteNeighborsCount == Integer.MAX_VALUE)
+				throw new GraphCreationException("Cannot handle more than " + Integer.MAX_VALUE
 						+ " remote incoming transitions per node");
 			remoteInNeighborsCount++;
 			graph.getInTransitions().addRemoteTransition(this, sourceOwner, sourceId);
