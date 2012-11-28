@@ -1,35 +1,24 @@
 package hipg.app;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileChannel.MapMode;
-
-import myutils.ConversionUtils;
 import hipg.Config;
 import hipg.Node;
 import hipg.Reduce;
 import hipg.format.GraphCreationException;
 import hipg.format.GraphIO;
-import hipg.format.synthetic.AbstractSyntheticGraphMaker;
-import hipg.format.synthetic.SyntheticGraph;
 import hipg.graph.ExplicitGraph;
 import hipg.graph.ExplicitLocalNode;
 import hipg.runtime.Runtime;
 import hipg.runtime.Synchronizer;
+import myutils.ConversionUtils;
 
 public class PageRankWithTermination {
-  
-  // Global variables
+
+	// Global variables
 	private static final double D = 0.85, E = 0.001;
 
 	// Interface for vertex
 	public static interface MyNode extends Node {
+
 		public void rank(Ranker ranker, double r);
 
 		public void compute(Ranker ranker);
@@ -39,24 +28,28 @@ public class PageRankWithTermination {
 
 	// Class for vertex
 	public static final class MyLocalNode extends ExplicitLocalNode<MyNode> implements MyNode {
-	  // Local variables
+		// Local variables
+
 		private double rank, ranksum = 0.0, diff, N;
 
 		public MyLocalNode(ExplicitGraph<MyNode> graph, int reference) {
 			super(graph, reference);
 		}
 
+		@Override
 		public void rank(Ranker ranker, double r) {
 			ranksum += r;
 		}
 
+		@Override
 		public void compute(Ranker ranker) {
 			double oldRank = rank;
 			rank = (1 - D) / N + D * ranksum;
 			ranksum = 0.0;
 			diff = Math.abs(rank - oldRank);
 		}
-		
+
+		@Override
 		public void send(Ranker ranker) {
 			for (int i = 0; hasNeighbor(i); i++) {
 				neighbor(i).rank(ranker, rank / outdegree());
@@ -66,6 +59,7 @@ public class PageRankWithTermination {
 
 	// Master thread
 	public static class Ranker extends Synchronizer {
+
 		private final ExplicitGraph<MyNode> g;
 
 		public Ranker(ExplicitGraph<MyNode> g) {
@@ -73,30 +67,30 @@ public class PageRankWithTermination {
 		}
 
 		@Reduce
-		public double getGlobalErrorSum(double errorSum) {
+		public double getGlobalDiffSum(double diffSum) {
 			for (int i = 0; i < g.nodes(); i++) {
-				errorSum += ((MyLocalNode) g.node(i)).diff;
+				diffSum += ((MyLocalNode) g.node(i)).diff;
 			}
-			return errorSum;
+			return diffSum;
 		}
 
 		@Override
 		public void run() {
 
-		  // worker step
-		  for (int i = 0; i < g.nodes(); i++) {
-				((MyLocalNode) g.node(i)).rank = 1.0 / g.nodes();
-				((MyLocalNode) g.node(i)).N = g.nodes();
+			// initialization of vertices
+			for (int i = 0; i < g.nodes(); i++) {
+				((MyLocalNode) g.node(i)).rank = 1.0 / g.getGlobalSize();
+				((MyLocalNode) g.node(i)).N = g.getGlobalSize();
 				nice(i);
 			}
 			barrier();
-			
+
 			// master loop
 			int step = 0;
-			double errorSum = 2 * E;
-			while(errorSum > E) {
+			double diffSum = Double.POSITIVE_INFINITY;
+			while (diffSum > E) {
 				print("Step " + step);
-				
+
 				// worker step
 				for (int i = 0; i < g.nodes(); i++) {
 					((MyLocalNode) g.node(i)).send(this);
@@ -112,101 +106,22 @@ public class PageRankWithTermination {
 				barrier();
 
 				// master step
-				errorSum = getGlobalErrorSum(0.0);
+				diffSum = getGlobalDiffSum(0.0);
+				print("errorSum = " + diffSum);
 				barrier();
 
 				// master step
 				step++;
 			}
 		}
-		
+
 		void nice(int i) {
-      if (i % 10000 == 9999) {
-        Runtime.nice();
-      }
-		}
-		
-	}
-
-	public class BinaryReader implements SyntheticGraph {
-		private long nodeCount, edgeCount;
-		private String filename;
-
-		public BinaryReader(String filename) throws GraphCreationException {
-			this.filename = filename;
-		}
-
-		@SuppressWarnings("unused")
-    @Override
-		public <TNode extends Node, TLocalNode extends ExplicitLocalNode<TNode>> long create(
-				AbstractSyntheticGraphMaker<TNode, TLocalNode> maker) throws GraphCreationException {
-			long source = 0;
-			FileInputStream fis = null;
-			try {
-				File file = new File(filename);
-				fis = new FileInputStream(file);
-				FileChannel ch = fis.getChannel();
-				int size = (int) ch.size();
-				MappedByteBuffer bb = ch.map(MapMode.READ_ONLY, 0, size);
-				bb.order(ByteOrder.LITTLE_ENDIAN);
-				IntBuffer ib = bb.asIntBuffer();
-				int magic = ib.get();
-				assert(magic == 0x03939999);
-				int nodeIdentifierSize = ib.get();
-				int edgeIdentifierSize = ib.get();
-				nodeCount = ib.get();
-				edgeCount = ib.get();
-
-				// Nodes
-				int[] indices = new int[(int) nodeCount + 1];
-				for (int i = 0; i < nodeCount + 1; i++) {
-					indices[i] = ib.get();
-				}
-				
-				// Edges
-				for (int i = 0; i < nodeCount; i++) {
-					source = maker.addNode();
-					for (int j = indices[i]; j < indices[i+1]; j++) {
-						int target = ib.get();
-						maker.addTransition(source, target);
-					}
-				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-			  try {
-          fis.close();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+			if (i % 10000 == 9999) {
+				Runtime.nice();
 			}
-
-			return source;
-		}
-
-		@Override
-		public long estimateGlobalNodes() {
-			return nodeCount;
-		}
-
-		@Override
-		public long estimateGlobalTransitions() {
-			return edgeCount;
-		}
-
-		@Override
-		public boolean canSynthetizeTranspose() {
-			return true;
-		}
-
-		@Override
-		public boolean transitionsPerNodeCreatedSequentially() {
-			return true;
 		}
 	}
-	
+
 	private static void print(String msg) {
 		if (Runtime.getRank() == 0) {
 			System.out.println(Runtime.getRank() + ": " + msg);
