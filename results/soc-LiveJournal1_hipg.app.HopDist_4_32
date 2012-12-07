@@ -1,0 +1,303 @@
+Running srun -v --ntasks-per-node=4 --nodes=32 /cm/shared/apps/java/jre1.7.0_09/bin/java  -XX:NewRatio=24 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:+CMSIncrementalPacing -XX:PretenureSizeThreshold=5k -server -XX:+UseFastAccessorMethods -Dcom.sun.sdp.conf=sdp.conf -Djava.net.preferIPv4Stack=true -Dibis.io.smallarraybound=32  -Djava.home=/cm/shared/apps/java/jre1.7.0_09 -classpath .:./lib/hipg-1.5.jar:./lib/hipg-examples-1.5.jar:./external/antenna-bin-1.0.0.jar:./external/bcel-5.3-SNAPSHOT.jar:./external/castor-1.1.1-xml.jar:./external/commons-jxpath-1.1.jar:./external/commons-logging-api.jar:./external/commons-logging.jar:./external/GAT-API.jar:./external/GAT-engine.jar:./external/gnu-regexp-1.1.4.jar:./external/hamcrest-all-1.3.0RC2.jar:./external/ibis-compile-2.2.jar:./external/ibis-io-2.2.jar:./external/ibis-util-2.2.jar:./external/ipl-2.2.jar:./external/ipl-impl-2.2.jar:./external/ipl-impl-dummy-2.2.jar:./external/ipl-impl-lrmc-2.2.jar:./external/ipl-impl-multi-2.2.jar:./external/ipl-impl-mx-2.2.jar:./external/ipl-impl-nio-2.2.jar:./external/ipl-impl-smartsockets-2.2.jar:./external/ipl-impl-tcp-2.2.jar:./external/ipl-support-2.2.jar:./external/javaassist-3.13.jar:./external/javautils-1.0.jar:./external/javautils-docs-1.0.jar:./external/jstun-0.6.1.jar:./external/juds-0.94-universal.jar:./external/junit4-4.8.1.jar:./external/log4j-1.2.13.jar:./external/satin-2.2.jar:./external/sbbi-upnplib-1.0.2.jar:./external/slf4j-api-1.5.3.jar:./external/slf4j-api-1.5.6.jar:./external/slf4j-log4j12-1.5.3.jar:./external/slf4j-log4j12-1.5.6.jar:./external/smartsockets-1.52.jar:./external/smartsockets-1.59.jar:./external/spinja.jar:./external/TGGraphLayout-ibis-1.58.jar:./external/TGGraphLayout-smartsockets-1.52.jar:./external/througraph-1.0.jar:./external/trilead-ssh2-build213.jar:./external/trilead-ssh2-r13339-CJ.jar:./external/xercesImpl.jar:./external/xmlParserAPIs.jar -Dlog4j.configuration=file:./log4j.properties -Xmx32g -Xms32g -Dibis.server.address=bunch01:7878 -Dibis.pool.name=pool-hipg.app.HopDist-20121205063144-714852868 -Dhipg.poolSize=128     hipg.app.HopDist svcii /home/janlugt/graphs/soc-LiveJournal1_svcii_128
+srun: auth plugin for Munge (http://home.gna.org/munge/) loaded
+srun: job 5562 queued and waiting for resources
+srun: job 5562 has been allocated resources
+srun: jobid 5562: nodes(32):`bunch[04-21,23-35,38]', cpu counts: 32(x32)
+srun: Resources allocated for job 5562 and being configured, please wait
+srun: Job step creation still disabled, retrying
+srun: Job step creation still disabled, retrying
+srun: switch NONE plugin loaded
+srun: Job step created
+srun: launching 5562.0 on host bunch04, 4 tasks: [0-3]
+srun: launching 5562.0 on host bunch05, 4 tasks: [4-7]
+srun: launching 5562.0 on host bunch06, 4 tasks: [8-11]
+srun: launching 5562.0 on host bunch07, 4 tasks: [12-15]
+srun: launching 5562.0 on host bunch08, 4 tasks: [16-19]
+srun: launching 5562.0 on host bunch09, 4 tasks: [20-23]
+srun: launching 5562.0 on host bunch10, 4 tasks: [24-27]
+srun: launching 5562.0 on host bunch11, 4 tasks: [28-31]
+srun: launching 5562.0 on host bunch12, 4 tasks: [32-35]
+srun: launching 5562.0 on host bunch13, 4 tasks: [36-39]
+srun: launching 5562.0 on host bunch14, 4 tasks: [40-43]
+srun: launching 5562.0 on host bunch15, 4 tasks: [44-47]
+srun: launching 5562.0 on host bunch16, 4 tasks: [48-51]
+srun: launching 5562.0 on host bunch17, 4 tasks: [52-55]
+srun: launching 5562.0 on host bunch18, 4 tasks: [56-59]
+srun: launching 5562.0 on host bunch19, 4 tasks: [60-63]
+srun: launching 5562.0 on host bunch20, 4 tasks: [64-67]
+srun: launching 5562.0 on host bunch21, 4 tasks: [68-71]
+srun: launching 5562.0 on host bunch23, 4 tasks: [72-75]
+srun: launching 5562.0 on host bunch24, 4 tasks: [76-79]
+srun: launching 5562.0 on host bunch25, 4 tasks: [80-83]
+srun: launching 5562.0 on host bunch26, 4 tasks: [84-87]
+srun: launching 5562.0 on host bunch27, 4 tasks: [88-91]
+srun: launching 5562.0 on host bunch28, 4 tasks: [92-95]
+srun: launching 5562.0 on host bunch29, 4 tasks: [96-99]
+srun: launching 5562.0 on host bunch30, 4 tasks: [100-103]
+srun: launching 5562.0 on host bunch31, 4 tasks: [104-107]
+srun: launching 5562.0 on host bunch32, 4 tasks: [108-111]
+srun: launching 5562.0 on host bunch33, 4 tasks: [112-115]
+srun: launching 5562.0 on host bunch34, 4 tasks: [116-119]
+srun: launching 5562.0 on host bunch35, 4 tasks: [120-123]
+srun: launching 5562.0 on host bunch38, 4 tasks: [124-127]
+srun: Node bunch05, 4 tasks started
+srun: Node bunch04, 4 tasks started
+srun: Node bunch06, 4 tasks started
+srun: Node bunch08, 4 tasks started
+srun: Node bunch09, 4 tasks started
+srun: Node bunch12, 4 tasks started
+srun: Node bunch10, 4 tasks started
+srun: Node bunch07, 4 tasks started
+srun: Node bunch11, 4 tasks started
+srun: Node bunch15, 4 tasks started
+srun: Node bunch14, 4 tasks started
+srun: Node bunch13, 4 tasks started
+srun: Node bunch17, 4 tasks started
+srun: Node bunch16, 4 tasks started
+srun: Node bunch21, 4 tasks started
+srun: Node bunch19, 4 tasks started
+srun: Node bunch20, 4 tasks started
+srun: Node bunch25, 4 tasks started
+srun: Node bunch24, 4 tasks started
+srun: Node bunch23, 4 tasks started
+srun: Node bunch28, 4 tasks started
+srun: Node bunch26, 4 tasks started
+srun: Node bunch33, 4 tasks started
+srun: Node bunch30, 4 tasks started
+srun: Node bunch29, 4 tasks started
+srun: Node bunch31, 4 tasks started
+srun: Node bunch32, 4 tasks started
+srun: Node bunch38, 4 tasks started
+srun: Node bunch27, 4 tasks started
+srun: Node bunch18, 4 tasks started
+srun: Node bunch35, 4 tasks started
+srun: Node bunch34, 4 tasks started
+Configuration:
+    POOLSIZE                                = 128
+    ERRCHECK                                = false
+    FINEDEBUG                               = false
+    FINE_TIMING                             = false
+    STATISTICS                              = true
+    THROUGHPUT                              = false
+    MESSAGE_BUF_SIZE                        = 32768 KB
+    INIT_SEND_BUFFERS                       = 50
+    INIT_RECV_BUFFERS                       = 50
+    SYNCHRONIZER_QUEUE_CHUNK_SIZE           = 16384
+    SYNCHRONIZER_QUEUE_INITIAL_CHUNKS       = 1
+    SYNCHRONIZER_QUEUE_MEM_CACHE_SIZE       = 0
+    MAX_METHODS_IMMEDIATE                   = 100
+    OBJECT_SERIALIZATION                    = true
+    PREFERRED_MINIMAL_MESSAGE_SIZE          = 1024
+    SKIP_STEPS_BEFORE_SENDING_SMALL_MESSAGE = 50
+    YIELD_BEFORE_SENDING_SMALL_MESSAGE      = -1
+    FLUSH_BIGGEST                           = false
+0: Reading graph in format svcii /home/janlugt/graphs/soc-LiveJournal1_svcii_128
+0: Graph with 4847571 nodes read in 15.53s
+0: Starting HopDist
+0: Using root 0@0
+0: Starting Ranker
+0: Step 0
+0: Step 1
+0: Step 2
+0: Step 3
+0: Step 4
+0: Step 5
+0: Step 6
+0: Step 7
+0: Step 8
+0: Step 9
+0: Step 10
+0: Step 11
+0: Step 12
+0: Step 13
+0: Step 14
+0: Computed ranks for graph with global size 4847571
+0: Ranker on 128 processors took 11.9s
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch04: task 0: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch29: task 96: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch25: task 83: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch20: task 66: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch24: task 77: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch21: task 68: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch17: task 52: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch20: task 67: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch27: task 89: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch13: task 36: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch24: task 78: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch14: task 42: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch17: task 53: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch21: task 70: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch06: task 8: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch25: task 82: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch05: task 6: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch07: task 15: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch26: task 86: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch11: task 31: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch19: task 63: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch07: task 14: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch33: task 115: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch19: task 60: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch25: task 81: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch28: task 93: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch28: task 94: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch29: task 98: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch16: task 48: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch05: task 5: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch15: task 44: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch25: task 80: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch24: task 76: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch23: task 72: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch18: task 56: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch35: task 123: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch11: task 30: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch07: task 12: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch30: task 101: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch29: task 99: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch15: task 47: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch30: task 102: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch16: task 49: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch38: task 124: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch20: task 64: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch06: task 10: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch20: task 65: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch04: task 2: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch26: task 84: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch14: task 40: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch18: task 58: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch07: task 13: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch27: task 88: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch33: task 113: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch23: task 75: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch09: task 22: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch28: task 95: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch24: task 79: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch31: task 104: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch05: task 4: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch23: task 73: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch28: task 92: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch11: task 28: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch15: task 46: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch11: task 29: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch17: task 55: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch33: task 112: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch15: task 45: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch23: task 74: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch17: task 54: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch29: task 97: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch33: task 114: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch05: task 7: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch21: tasks 69,71: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch14: tasks 41,43: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch06: tasks 9,11: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch30: tasks 100,103: Completed
+srun: Received task exit notification for 4 tasks (status=0x0000).
+srun: bunch34: tasks 116-119: Completed
+srun: Received task exit notification for 3 tasks (status=0x0000).
+srun: bunch09: tasks 20-21,23: Completed
+srun: Received task exit notification for 4 tasks (status=0x0000).
+srun: bunch10: tasks 24-27: Completed
+srun: Received task exit notification for 3 tasks (status=0x0000).
+srun: bunch13: tasks 37-39: Completed
+srun: Received task exit notification for 4 tasks (status=0x0000).
+srun: bunch08: tasks 16-19: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch04: tasks 1,3: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch19: tasks 61-62: Completed
+srun: Received task exit notification for 3 tasks (status=0x0000).
+srun: bunch35: tasks 120-122: Completed
+srun: Received task exit notification for 3 tasks (status=0x0000).
+srun: bunch38: tasks 125-127: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch27: tasks 90-91: Completed
+srun: Received task exit notification for 4 tasks (status=0x0000).
+srun: bunch12: tasks 32-35: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch18: tasks 57,59: Completed
+srun: Received task exit notification for 3 tasks (status=0x0000).
+srun: bunch31: tasks 105-107: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch16: task 50: Completed
+srun: Received task exit notification for 2 tasks (status=0x0000).
+srun: bunch26: tasks 85,87: Completed
+srun: Received task exit notification for 4 tasks (status=0x0000).
+srun: bunch32: tasks 108-111: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch16: task 51: Completed

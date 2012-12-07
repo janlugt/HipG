@@ -1,0 +1,195 @@
+Running srun -v --ntasks-per-node=1 --nodes=32 /cm/shared/apps/java/jre1.7.0_09/bin/java  -XX:NewRatio=24 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:+CMSIncrementalPacing -XX:PretenureSizeThreshold=5k -server -XX:+UseFastAccessorMethods -Dcom.sun.sdp.conf=sdp.conf -Djava.net.preferIPv4Stack=true -Dibis.io.smallarraybound=32  -Djava.home=/cm/shared/apps/java/jre1.7.0_09 -classpath .:./lib/hipg-1.5.jar:./lib/hipg-examples-1.5.jar:./external/antenna-bin-1.0.0.jar:./external/bcel-5.3-SNAPSHOT.jar:./external/castor-1.1.1-xml.jar:./external/commons-jxpath-1.1.jar:./external/commons-logging-api.jar:./external/commons-logging.jar:./external/GAT-API.jar:./external/GAT-engine.jar:./external/gnu-regexp-1.1.4.jar:./external/hamcrest-all-1.3.0RC2.jar:./external/ibis-compile-2.2.jar:./external/ibis-io-2.2.jar:./external/ibis-util-2.2.jar:./external/ipl-2.2.jar:./external/ipl-impl-2.2.jar:./external/ipl-impl-dummy-2.2.jar:./external/ipl-impl-lrmc-2.2.jar:./external/ipl-impl-multi-2.2.jar:./external/ipl-impl-mx-2.2.jar:./external/ipl-impl-nio-2.2.jar:./external/ipl-impl-smartsockets-2.2.jar:./external/ipl-impl-tcp-2.2.jar:./external/ipl-support-2.2.jar:./external/javaassist-3.13.jar:./external/javautils-1.0.jar:./external/javautils-docs-1.0.jar:./external/jstun-0.6.1.jar:./external/juds-0.94-universal.jar:./external/junit4-4.8.1.jar:./external/log4j-1.2.13.jar:./external/satin-2.2.jar:./external/sbbi-upnplib-1.0.2.jar:./external/slf4j-api-1.5.3.jar:./external/slf4j-api-1.5.6.jar:./external/slf4j-log4j12-1.5.3.jar:./external/slf4j-log4j12-1.5.6.jar:./external/smartsockets-1.52.jar:./external/smartsockets-1.59.jar:./external/spinja.jar:./external/TGGraphLayout-ibis-1.58.jar:./external/TGGraphLayout-smartsockets-1.52.jar:./external/througraph-1.0.jar:./external/trilead-ssh2-build213.jar:./external/trilead-ssh2-r13339-CJ.jar:./external/xercesImpl.jar:./external/xmlParserAPIs.jar -Dlog4j.configuration=file:./log4j.properties -Xmx32g -Xms32g -Dibis.server.address=bunch01:7878 -Dibis.pool.name=pool-hipg.app.PageRankWithTermination-20121205070150-717759187 -Dhipg.poolSize=32     hipg.app.PageRankWithTermination svcii /home/janlugt/graphs/soc-LiveJournal1_svcii_32
+srun: auth plugin for Munge (http://home.gna.org/munge/) loaded
+srun: job 5581 queued and waiting for resources
+srun: job 5581 has been allocated resources
+srun: jobid 5581: nodes(32):`bunch[04-21,23-35,38]', cpu counts: 32(x32)
+srun: Resources allocated for job 5581 and being configured, please wait
+srun: Job step creation still disabled, retrying
+srun: switch NONE plugin loaded
+srun: Job step created
+srun: launching 5581.0 on host bunch04, 1 tasks: 0
+srun: launching 5581.0 on host bunch05, 1 tasks: 1
+srun: launching 5581.0 on host bunch06, 1 tasks: 2
+srun: launching 5581.0 on host bunch07, 1 tasks: 3
+srun: launching 5581.0 on host bunch08, 1 tasks: 4
+srun: launching 5581.0 on host bunch09, 1 tasks: 5
+srun: launching 5581.0 on host bunch10, 1 tasks: 6
+srun: launching 5581.0 on host bunch11, 1 tasks: 7
+srun: launching 5581.0 on host bunch12, 1 tasks: 8
+srun: launching 5581.0 on host bunch13, 1 tasks: 9
+srun: launching 5581.0 on host bunch14, 1 tasks: 10
+srun: launching 5581.0 on host bunch15, 1 tasks: 11
+srun: launching 5581.0 on host bunch16, 1 tasks: 12
+srun: launching 5581.0 on host bunch17, 1 tasks: 13
+srun: launching 5581.0 on host bunch18, 1 tasks: 14
+srun: launching 5581.0 on host bunch19, 1 tasks: 15
+srun: launching 5581.0 on host bunch20, 1 tasks: 16
+srun: launching 5581.0 on host bunch21, 1 tasks: 17
+srun: launching 5581.0 on host bunch23, 1 tasks: 18
+srun: launching 5581.0 on host bunch24, 1 tasks: 19
+srun: launching 5581.0 on host bunch25, 1 tasks: 20
+srun: launching 5581.0 on host bunch26, 1 tasks: 21
+srun: launching 5581.0 on host bunch27, 1 tasks: 22
+srun: launching 5581.0 on host bunch28, 1 tasks: 23
+srun: launching 5581.0 on host bunch29, 1 tasks: 24
+srun: launching 5581.0 on host bunch30, 1 tasks: 25
+srun: launching 5581.0 on host bunch31, 1 tasks: 26
+srun: launching 5581.0 on host bunch32, 1 tasks: 27
+srun: launching 5581.0 on host bunch33, 1 tasks: 28
+srun: launching 5581.0 on host bunch34, 1 tasks: 29
+srun: launching 5581.0 on host bunch35, 1 tasks: 30
+srun: launching 5581.0 on host bunch38, 1 tasks: 31
+srun: Node bunch06, 1 tasks started
+srun: Node bunch04, 1 tasks started
+srun: Node bunch07, 1 tasks started
+srun: Node bunch14, 1 tasks started
+srun: Node bunch13, 1 tasks started
+srun: Node bunch12, 1 tasks started
+srun: Node bunch21, 1 tasks started
+srun: Node bunch11, 1 tasks started
+srun: Node bunch17, 1 tasks started
+srun: Node bunch27, 1 tasks started
+srun: Node bunch19, 1 tasks started
+srun: Node bunch09, 1 tasks started
+srun: Node bunch23, 1 tasks started
+srun: Node bunch38, 1 tasks started
+srun: Node bunch10, 1 tasks started
+srun: Node bunch16, 1 tasks started
+srun: Node bunch35, 1 tasks started
+srun: Node bunch30, 1 tasks started
+srun: Node bunch29, 1 tasks started
+srun: Node bunch24, 1 tasks started
+srun: Node bunch26, 1 tasks started
+srun: Node bunch34, 1 tasks started
+srun: Node bunch28, 1 tasks started
+srun: Node bunch18, 1 tasks started
+srun: Node bunch33, 1 tasks started
+srun: Node bunch25, 1 tasks started
+srun: Node bunch32, 1 tasks started
+srun: Node bunch05, 1 tasks started
+srun: Node bunch08, 1 tasks started
+srun: Node bunch31, 1 tasks started
+srun: Node bunch20, 1 tasks started
+srun: Node bunch15, 1 tasks started
+Configuration:
+    POOLSIZE                                = 32
+    ERRCHECK                                = false
+    FINEDEBUG                               = false
+    FINE_TIMING                             = false
+    STATISTICS                              = true
+    THROUGHPUT                              = false
+    MESSAGE_BUF_SIZE                        = 32768 KB
+    INIT_SEND_BUFFERS                       = 50
+    INIT_RECV_BUFFERS                       = 50
+    SYNCHRONIZER_QUEUE_CHUNK_SIZE           = 16384
+    SYNCHRONIZER_QUEUE_INITIAL_CHUNKS       = 1
+    SYNCHRONIZER_QUEUE_MEM_CACHE_SIZE       = 0
+    MAX_METHODS_IMMEDIATE                   = 100
+    OBJECT_SERIALIZATION                    = true
+    PREFERRED_MINIMAL_MESSAGE_SIZE          = 1024
+    SKIP_STEPS_BEFORE_SENDING_SMALL_MESSAGE = 50
+    YIELD_BEFORE_SENDING_SMALL_MESSAGE      = -1
+    FLUSH_BIGGEST                           = false
+0: Reading graph in format svcii /home/janlugt/graphs/soc-LiveJournal1_svcii_32
+0: Graph with 4847571 nodes read in 44.55s
+0: Starting Ranker
+0: Step 0
+0: errorSum = 0.8057971827081722
+0: Step 1
+0: errorSum = 0.2579815753222448
+0: Step 2
+0: errorSum = 0.0814644297872576
+0: Step 3
+0: errorSum = 0.03832035947840402
+0: Step 4
+0: errorSum = 0.021693926404797628
+0: Step 5
+0: errorSum = 0.01395499311585249
+0: Step 6
+0: errorSum = 0.009722125702452707
+0: Step 7
+0: errorSum = 0.007086124439912317
+0: Step 8
+0: errorSum = 0.005357440920156401
+0: Step 9
+0: errorSum = 0.004148026867393889
+0: Step 10
+0: errorSum = 0.0032780149974901986
+0: Step 11
+0: errorSum = 0.0026290605430076977
+0: Step 12
+0: errorSum = 0.0021318041750264245
+0: Step 13
+0: errorSum = 0.0017416153109997053
+0: Step 14
+0: errorSum = 0.001430064837109044
+0: Step 15
+0: errorSum = 0.0011784284117682562
+0: Step 16
+0: errorSum = 9.728861851240007E-4
+0: Computed ranks for graph with global size 4847571
+0: Ranker on 32 processors took 31.56s
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch13: task 9: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch27: task 22: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch11: task 7: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch04: task 0: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch34: task 29: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch26: task 21: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch12: task 8: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch09: task 5: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch06: task 2: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch07: task 3: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch30: task 25: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch29: task 24: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch10: task 6: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch14: task 10: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch33: task 28: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch18: task 14: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch25: task 20: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch38: task 31: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch24: task 19: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch35: task 30: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch05: task 1: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch17: task 13: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch28: task 23: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch21: task 17: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch16: task 12: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch23: task 18: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch32: task 27: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch08: task 4: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch31: task 26: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch19: task 15: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch20: task 16: Completed
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch15: task 11: Completed

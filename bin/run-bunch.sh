@@ -84,7 +84,7 @@ if [ -z "$HOST" ]; then
 	HOST=$(hostname)
 fi
 if [ -z "$HEAP" ]; then
-	HEAP=100g
+	HEAP=32g
 fi
 
 # Execute
@@ -92,7 +92,7 @@ HOSTNAME=$HOST:$PORT
 echo "Connecting to server $HOSTNAME" > /dev/stderr
 
 # set java binary
-JAVA_HOME="/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64"
+JAVA_HOME="/cm/shared/apps/java/jre1.7.0_09"
 
 OPT=
 
@@ -170,13 +170,14 @@ OPT="$OPT -server"
 # (Trace class loading and unloading)
 # OPT="$OPT -XX:+TraceClassLoading -XX:+TraceClassUnloading"
 # (Compress 64-pointers)
-OPT="$OPT -XX:+UseCompressedOops"
+# OPT="$OPT -XX:+UseCompressedOops"
 # (Aggressive experimental options!)
 # OPT="$OPT -XX:+AggressiveOpts"
 # (Speeds up locking uncontended monitors)
 # OPT="$OPT -XX:+UseBiasedLocking"
 OPT="$OPT -XX:+UseFastAccessorMethods"
 # OPT="$OPT -XX:+UseParNewGC"
+OPT="$OPT -Dcom.sun.sdp.conf=sdp.conf -Djava.net.preferIPv4Stack=true"
 
 # ---------------------------------------------
 # Ibis options

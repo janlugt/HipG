@@ -1,0 +1,52 @@
+Running srun -v --ntasks-per-node=1 --nodes=1 /cm/shared/apps/java/jre1.7.0_09/bin/java  -XX:NewRatio=24 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:+CMSIncrementalPacing -XX:PretenureSizeThreshold=5k -server -XX:+UseFastAccessorMethods -Dcom.sun.sdp.conf=sdp.conf -Djava.net.preferIPv4Stack=true -Dibis.io.smallarraybound=32  -Djava.home=/cm/shared/apps/java/jre1.7.0_09 -classpath .:./lib/hipg-1.5.jar:./lib/hipg-examples-1.5.jar:./external/antenna-bin-1.0.0.jar:./external/bcel-5.3-SNAPSHOT.jar:./external/castor-1.1.1-xml.jar:./external/commons-jxpath-1.1.jar:./external/commons-logging-api.jar:./external/commons-logging.jar:./external/GAT-API.jar:./external/GAT-engine.jar:./external/gnu-regexp-1.1.4.jar:./external/hamcrest-all-1.3.0RC2.jar:./external/ibis-compile-2.2.jar:./external/ibis-io-2.2.jar:./external/ibis-util-2.2.jar:./external/ipl-2.2.jar:./external/ipl-impl-2.2.jar:./external/ipl-impl-dummy-2.2.jar:./external/ipl-impl-lrmc-2.2.jar:./external/ipl-impl-multi-2.2.jar:./external/ipl-impl-mx-2.2.jar:./external/ipl-impl-nio-2.2.jar:./external/ipl-impl-smartsockets-2.2.jar:./external/ipl-impl-tcp-2.2.jar:./external/ipl-support-2.2.jar:./external/javaassist-3.13.jar:./external/javautils-1.0.jar:./external/javautils-docs-1.0.jar:./external/jstun-0.6.1.jar:./external/juds-0.94-universal.jar:./external/junit4-4.8.1.jar:./external/log4j-1.2.13.jar:./external/satin-2.2.jar:./external/sbbi-upnplib-1.0.2.jar:./external/slf4j-api-1.5.3.jar:./external/slf4j-api-1.5.6.jar:./external/slf4j-log4j12-1.5.3.jar:./external/slf4j-log4j12-1.5.6.jar:./external/smartsockets-1.52.jar:./external/smartsockets-1.59.jar:./external/spinja.jar:./external/TGGraphLayout-ibis-1.58.jar:./external/TGGraphLayout-smartsockets-1.52.jar:./external/througraph-1.0.jar:./external/trilead-ssh2-build213.jar:./external/trilead-ssh2-r13339-CJ.jar:./external/xercesImpl.jar:./external/xmlParserAPIs.jar -Dlog4j.configuration=file:./log4j.properties -Xmx32g -Xms32g -Dibis.server.address=bunch01:7878 -Dibis.pool.name=pool-hipg.app.HopDist-20121205053533-337117585 -Dhipg.poolSize=1     hipg.app.HopDist svcii /home/janlugt/graphs/soc-LiveJournal1_svcii_1
+srun: auth plugin for Munge (http://home.gna.org/munge/) loaded
+srun: jobid 5540: nodes(1):`bunch02', cpu counts: 32(x1)
+srun: Resources allocated for job 5540 and being configured, please wait
+srun: Job step creation still disabled, retrying
+srun: switch NONE plugin loaded
+srun: Job step created
+srun: launching 5540.0 on host bunch02, 1 tasks: 0
+srun: Node bunch02, 1 tasks started
+Configuration:
+    POOLSIZE                                = 1
+    ERRCHECK                                = false
+    FINEDEBUG                               = false
+    FINE_TIMING                             = false
+    STATISTICS                              = true
+    THROUGHPUT                              = false
+    MESSAGE_BUF_SIZE                        = 32768 KB
+    INIT_SEND_BUFFERS                       = 50
+    INIT_RECV_BUFFERS                       = 50
+    SYNCHRONIZER_QUEUE_CHUNK_SIZE           = 16384
+    SYNCHRONIZER_QUEUE_INITIAL_CHUNKS       = 1
+    SYNCHRONIZER_QUEUE_MEM_CACHE_SIZE       = 0
+    MAX_METHODS_IMMEDIATE                   = 100
+    OBJECT_SERIALIZATION                    = true
+    PREFERRED_MINIMAL_MESSAGE_SIZE          = 1024
+    SKIP_STEPS_BEFORE_SENDING_SMALL_MESSAGE = 50
+    YIELD_BEFORE_SENDING_SMALL_MESSAGE      = -1
+    FLUSH_BIGGEST                           = false
+0: Reading graph in format svcii /home/janlugt/graphs/soc-LiveJournal1_svcii_1
+0: Graph with 4847571 nodes read in 558.07s
+0: Starting HopDist
+0: Using root 0@0
+0: Starting Ranker
+0: Step 0
+0: Step 1
+0: Step 2
+0: Step 3
+0: Step 4
+0: Step 5
+0: Step 6
+0: Step 7
+0: Step 8
+0: Step 9
+0: Step 10
+0: Step 11
+0: Step 12
+0: Step 13
+0: Step 14
+0: Computed ranks for graph with global size 4847571
+0: Ranker on 1 processors took 13.19s
+srun: Received task exit notification for 1 task (status=0x0000).
+srun: bunch02: task 0: Completed
