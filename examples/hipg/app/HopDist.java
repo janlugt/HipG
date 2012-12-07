@@ -37,7 +37,7 @@ public class HopDist {
 		
 		@Override
 		public void found(PathFinder ranker, int neighborDist) {
-			if (neighborDist < dist) {
+			if (neighborDist < dist && neighborDist < dist_nxt) {
 				dist_nxt = neighborDist;
 				updated_nxt = true;
 			}
@@ -166,7 +166,7 @@ public class HopDist {
 				.node(ExplicitNodeReference.getId(src)) : null);
 		
 		// Run HopDist.
-		print("Starting Ranker");
+		print("Starting HopDist");
 		PathFinder ranker = new PathFinder(g, srcNode);
 		long start = System.nanoTime();
 		Runtime.getRuntime().spawnAll(ranker);
@@ -175,7 +175,7 @@ public class HopDist {
 
 		// Print results.
 		final long N = g.getGlobalSize();
-		print("Computed ranks for graph with global size " + N);
-		print("Ranker on " + Runtime.getPoolSize() + " processors took " + ConversionUtils.ns2sec(time) + "s");
+		print("Computed hopdists for graph with global size " + N);
+		print("HopDist on " + Runtime.getPoolSize() + " processors took " + ConversionUtils.ns2sec(time) + "s");
 	}
 }
