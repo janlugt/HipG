@@ -14,9 +14,6 @@ import myutils.ConversionUtils;
 
 public class HopDist {
 
-	// Global variables
-	private static final double D = 0.85, E = 0.001;
-
 	// Interface for vertex
 	public static interface MyNode extends Node {
 
